@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row align-items-center text-center justify-content-center vh-100">
+    <div class="col-md-4">
+        <div class="card w-75 mx-auto"><div class="card-header"><h2>Astrology</h2></div>
+        <div class="card-body">
+            <a href="{{ url_for('astro.transits_upcoming')}}"><div class="btn btn-custom">Upcoming Transits</div></a>
+            <a href="{{ url_for('astro.transits_today')}}"><div class="btn btn-custom">Today's Transits</div></a>
+        </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card w-75 mx-auto">
+            <div class="card-header"><h2>Tarot</h2></div>
+            <div class="card-body">
+            <div class="btn-group">
+              <button type="button" class="btn btn-custom">Cards</button>
+              <button type="button" class="btn btn-custom dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+                <span class="visually-hidden">Toggle Dropdown</span>
+              </button>
+              <ul class="dropdown-menu dropdown-custom">
+                <li><a class="dropdown-item" href="#">Major Arcana</a></li>
+                <li><a class="dropdown-item" href="#">Wands</a></li>
+                <li><a class="dropdown-item" href="#">Swords</a></li>
+                <li><a class="dropdown-item" href="#">Cups</a></li>
+                <li><a class="dropdown-item" href="#">Pentacles</a></li>
+              </ul>
+            </div>
+            <a href="#"><div class="btn btn-custom">Month View</div></a>
+        </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card w-75 mx-auto">
+            <div class="card-header"><h2>Sugar Tracker</h2></div>
+            <div class="card-body">
+                <a href="{{url_for('sugar.record')}}"><div class="btn btn-custom">Record</div></a>
+                <a href="{{url_for('sugar.review')}}"><div class="btn btn-custom">Review</div></a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card w-50 mx-auto"><div class="card-header"><h2>Calendar</h2></div>
+        <div class="card-body">
+            <a href="#"><div class="btn btn-custom">Upcoming Tasks</div></a>
+            <a href="#"><div class="btn btn-custom">Month View</div></a>
+            <a href="#"><div class="btn btn-custom">Today</div></a>
+        </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card w-50 mx-auto"><div class="card-header"><h2>Journal</h2></div>
+        <div class="card-body">
+            <a href="#"><div class="btn btn-custom">Tarot</div></a>
+            <a href="#"><div class="btn btn-custom">Dream</div></a>
+            <a href="#"><div class="btn btn-custom">Diary</div></a>
+            <a href="#"><div class="btn btn-custom">Letters</div></a>
+        </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row row-cols-1 row-cols-md-3 g-43 text-center">
+    <div class="col">
+        <div class="card">
+            <div class="card-header">Add Sugar</div>
+            <div class="card-body">
+                <form action="" method="POST">
+                    {{sugar_form.hidden_tag()}}
+                    {{sugar_form.sugar(class="form-control text-center", placeholder="Blood Sugar")}}
+                    {{sugar_form.date(class="form-control text-center") }}
+                    {{ sugar_form.time(class="form-control text-center") }}
+                    {{ sugar_form.add_sugar(class="btn btn-custom")}}
+
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="card">
+            <div class="card-header">Add Dose</div>
+            <div class="card-body">
+                <form action="" method="POST">
+                    {{dose_form.hidden_tag()}}
+                    {{dose_form.dose(class="form-control text-center", placeholder="Insulin Dose")}}
+                    {{dose_form.date(class="form-control text-center") }}
+                    {{ dose_form.time(class="form-control text-center") }}
+                    {{ dose_form.add_dose(class="btn btn-custom")}}
+
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="card">
+            <div class="card-header">Add Meal</div>
+            <div class="card-body">
+                <form action="" method="POST">
+                    {{meal_form.hidden_tag()}}
+                    {{meal_form.meal(class="form-control text-center", placeholder="Meal")}}
+                    {{ meal_form.carbs(class="form-control text-center", placeholder="Carbs") }}
+                    {{meal_form.date(class="form-control text-center") }}
+                    {{ meal_form.time(class="form-control text-center") }}
+                    {{ meal_form.add_meal(class="btn btn-custom")}}
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

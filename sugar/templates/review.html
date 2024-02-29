@@ -1,0 +1,170 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+<div class="chartBox">
+    <canvas id="weekView"></canvas>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal Title</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <!-- Modal content goes here -->
+        This is the modal content.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+
+<script>
+    const wkView = document.getElementById('weekView');
+
+  const weekChart = new Chart(wkView, {
+    type: 'line',
+    data: {
+      datasets: [{
+        label: 'Blood Sugar Levels',
+
+        data: [{% for sugar in sugars %}
+            { x: '{{sugar.day.date}}T{{sugar.time}}', info: {y: {{sugar.sugar}}, text: '', type: 'sugar'  }},
+            {% endfor %}
+        ],
+        parsing: {
+      xAxisKey: 'x',
+      yAxisKey: 'info.y'
+    },
+        borderWidth: 3,
+                pointRadius: 5,
+                pointHoverRadius: 10
+
+      },
+      {
+        label: 'Meals - Carbs',
+        data: [ {% for meal in meals %}
+            { x: '{{meal.day.date}}T{{meal.time}}', info: {y: {{meal.carbs}}, text: '{{meal.meal}}', id: {{meal.id}}, type: 'meal' }},
+            {% endfor %}
+        ],
+        parsing: {
+      xAxisKey: 'x',
+      yAxisKey: 'info.y'
+    },
+        borderWidth: 3,
+                pointRadius: 5,
+                pointHoverRadius: 10
+      },
+      {
+                label: "Insulin Doses",
+                data: [ {% for dose in doses %} {x: '{{dose.day.date}}T{{dose.time}}', info: { y: {{dose.dose}}, text: '', type: 'dose'}},
+                {% endfor %} ],
+                parsing: {
+      xAxisKey: 'x',
+      yAxisKey: 'info.y'
+    },
+                borderWidth: 3,
+                pointRadius: 5,
+                pointHoverRadius: 10
+            },
+      ]
+    },
+    options: {
+
+      scales: {
+        x: {
+            type: 'time',
+            time: {
+            unit: 'day',
+            }},
+        y: {
+          beginAtZero: true
+        }
+      },
+      plugins: {
+        tooltip: {
+            callbacks: {
+                title: ((wkView, index) => {
+                    const text = wkView[0].raw.info.text;
+                    return [wkView[0].label, text]
+                })
+            }
+        }
+      }
+    }
+  });
+
+  function clickHandler(click){
+    const points = weekChart.getElementsAtEventForMode(click, 'nearest', { intersect: true}, true);
+    if (points.length) {
+        const firstPoint = points[0]
+        const value = weekChart.data.datasets[firstPoint.datasetIndex].data[firstPoint.index];
+
+        const modal = new bootstrap.Modal(document.getElementById('myModal'));
+
+        if (value.info.y == 0) {
+        document.getElementById('myModal').innerHTML = `
+          <div class="modal-dialog text-center">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title text-center" id="exampleModalLabel">` + value.info.text + `</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+              <p>
+                  <h4>Update Carbs</h4>
+                  </p>
+              <form action="/updateCarbs/`+value.info.id+`" method="POST">
+                    {{form.hidden_tag()}}
+                    {{ form.carbs.label }} {{ form.carbs }} <br>
+                    {{ form.submit}}
+                </form>
+
+              </div>
+              <div class="modal-footer">
+              </div>
+            </div>
+          </div>
+        `}
+         else {
+        document.getElementById('myModal').innerHTML = `
+          <div class="modal-dialog text-center">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title text-center" id="exampleModalLabel">` + value.info.text + `</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+              <p>
+                  <h4>` + value.info.y +  ` Carbs</h4>
+                  </p>
+              </div>
+              <div class="modal-footer">
+              </div>
+            </div>
+          </div>
+        `};
+        if (value.info.type == 'meal') {
+        modal.show();
+}
+    }
+
+  }
+  wkView.onclick = clickHandler
+
+
+</script>
+{% endblock content %}

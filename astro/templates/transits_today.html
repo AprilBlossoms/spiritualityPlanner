@@ -1,0 +1,594 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row">
+        {% if sun_aspects != [] %}
+    <div class="col-md-6">
+        <div class="card text-center">
+            <div class="row">
+                        <div class="col-md-4">
+                          <img src="../../static/images/sun_icon.png" class="img-fluid rounded-start" alt="">
+                            </div>
+                      <div class="col-md-8">
+            <div class="card-body">
+                <div class="card-title"><h3>Sun</h3></div>
+                <div class="accordion" id="sun_accordion">
+                          {% for aspect in sun_aspects %}
+                          <div class="accordion-item">
+                            <h2 class="accordion-header">
+                              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#transit{{aspect.transit.id}}" aria-expanded="true" aria-controls="transit{{aspect.transit.id}}">
+                                {{aspect.transit.aspect.aspect_type}} {{aspect.transit.natal_planet.planet}}
+                              </button>
+                            </h2>
+                            <div id="transit{{aspect.transit.id}}" class="accordion-collapse collapse" data-bs-parent="#sun_accordion">
+                              <div class="accordion-body">
+                                {% if aspect.transit.meaning %}
+                      {{ aspect.transit.meaning | safe }}
+                      {% else %}
+                      <button type="button" class="btn btn-custom" data-bs-toggle="modal" data-bs-target="#sunModal">
+                          Add Transit Meaning
+                        </button>
+                      <div class="modal fade" id="sunModal" tabindex="-1" aria-labelledby="sunModalLabel" aria-hidden="true">
+
+                            <div class="modal-dialog text-center">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title text-center" id="sunModalLabel">Transiting Sun {{ aspect.transit.aspect.aspect_type }} Natal {{ aspect.transit.natal_planet.planet }}</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                  </div>
+                                  <div class="modal-body">
+                                      <form action="{{url_for('astro.addTransitMeaning', transit_id=aspect.transit.id)}}" method="POST">
+                                        {{form.hidden_tag()}}
+                                        {{ form.meaning.label }} {{ form.meaning }} <br>
+                                        {{ form.submit}}
+                                    </form>
+
+                                  </div>
+
+                                </div>
+                              </div>
+                            </div>
+                      {% endif %}
+                              </div>
+                            </div>
+                          </div>
+                          {% endfor %}
+                        </div>
+            </div>
+                      </div>
+            </div>
+        </div>
+    </div>
+        {% endif %}
+    {% if moon_aspects != [] %}
+    <div class="col-md-6">
+        <div class="card text-center">
+            <div class="row">
+                        <div class="col-md-4">
+                          <img src="../../static/images/moon_icon.png" class="img-fluid rounded-start" alt="">
+                            </div>
+                      <div class="col-md-8">
+            <div class="card-body">
+                <div class="card-title"><h3>Moon</h3></div>
+                <div class="accordion" id="moon_accordion">
+                          {% for aspect in moon_aspects %}
+                          <div class="accordion-item">
+                            <h2 class="accordion-header">
+                              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#transit{{aspect.transit.id}}" aria-expanded="true" aria-controls="transit{{aspect.transit.id}}">
+                                {{aspect.transit.aspect.aspect_type}} {{aspect.transit.natal_planet.planet}}
+                              </button>
+                            </h2>
+                            <div id="transit{{aspect.transit.id}}" class="accordion-collapse collapse" data-bs-parent="#moon_accordion">
+                              <div class="accordion-body">
+                                {% if aspect.transit.meaning %}
+                      {{ aspect.transit.meaning  | safe}}
+                      {% else %}
+                      <button type="button" class="btn btn-custom" data-bs-toggle="modal" data-bs-target="#moonModal">
+                          Add Transit Meaning
+                        </button>
+                      <div class="modal fade" id="moonModal" tabindex="-1" aria-labelledby="moonModalLabel" aria-hidden="true">
+
+                            <div class="modal-dialog text-center">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title text-center" id="moonModalLabel">Transiting Moon {{ aspect.transit.aspect.aspect_type }} Natal {{ aspect.transit.natal_planet.planet }}</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                  </div>
+                                  <div class="modal-body">
+                                      <form action="{{url_for('astro.addTransitMeaning', transit_id=aspect.transit.id)}}" method="POST">
+                                        {{form.hidden_tag()}}
+                                        {{ form.meaning.label }} {{ form.meaning }} <br>
+                                        {{ form.submit}}
+                                    </form>
+
+                                  </div>
+
+                                </div>
+                              </div>
+                            </div>
+                      {% endif %}
+                              </div>
+                            </div>
+                          </div>
+                          {% endfor %}
+                        </div>
+
+            </div>
+                          </div>
+                </div>
+        </div>
+    </div>
+        {% endif %}
+        {% if merc_aspects != [] %}
+    <div class="col-md-6">
+        <div class="card text-center">
+            <div class="row">
+                        <div class="col-md-4">
+                          <img src="../../static/images/merc_sign.png" class="img-fluid rounded-start" alt="">
+                            </div>
+                      <div class="col-md-8">
+            <div class="card-body">
+                <div class="card-title"><h3>Mercury</h3></div>
+                <div class="accordion" id="merc_accordion">
+                          {% for aspect in merc_aspects %}
+                          <div class="accordion-item">
+                            <h2 class="accordion-header">
+                              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#transit{{aspect.transit.id}}" aria-expanded="true" aria-controls="transit{{aspect.transit.id}}">
+                                {{aspect.transit.aspect.aspect_type}} {{aspect.transit.natal_planet.planet}}
+                              </button>
+                            </h2>
+                            <div id="transit{{aspect.transit.id}}" class="accordion-collapse collapse" data-bs-parent="#merc_accordion">
+                              <div class="accordion-body">
+                                {% if aspect.transit.meaning %}
+                      {{ aspect.transit.meaning | safe}}
+                      {% else %}
+                      <button type="button" class="btn btn-custom" data-bs-toggle="modal" data-bs-target="#mercModal">
+                          Add Transit Meaning
+                        </button>
+                      <div class="modal fade" id="mercModal" tabindex="-1" aria-labelledby="mercModalLabel" aria-hidden="true">
+
+                            <div class="modal-dialog text-center">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title text-center" id="mercModalLabel">Transiting Mercury {{ aspect.transit.aspect.aspect_type }} Natal {{ aspect.transit.natal_planet.planet }}</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                  </div>
+                                  <div class="modal-body">
+                                      <form action="{{url_for('astro.addTransitMeaning', transit_id=aspect.transit.id)}}" method="POST">
+                                        {{form.hidden_tag()}}
+                                        {{ form.meaning.label }} {{ form.meaning }} <br>
+                                        {{ form.submit}}
+                                    </form>
+
+                                  </div>
+
+                                </div>
+                              </div>
+                            </div>
+                      {% endif %}
+                              </div>
+                            </div>
+                          </div>
+                          {% endfor %}
+                        </div>
+            </div>
+                      </div>
+            </div>
+        </div>
+    </div>
+        {% endif %}
+    {% if venus_aspects != [] %}
+    <div class="col-md-6">
+        <div class="card text-center">
+            <div class="row">
+                        <div class="col-md-4">
+                          <img src="../../static/images/venus_icon.png" class="img-fluid rounded-start" alt="">
+                            </div>
+                      <div class="col-md-8">
+            <div class="card-body">
+                <div class="card-title"><h3>Venus</h3></div>
+                <div class="accordion" id="venus_accordion">
+                          {% for aspect in venus_aspects %}
+                          <div class="accordion-item">
+                            <h2 class="accordion-header">
+                              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#transit{{aspect.transit.id}}" aria-expanded="true" aria-controls="transit{{aspect.transit.id}}">
+                                  {{aspect.transit.aspect.aspect_type}} {{aspect.transit.natal_planet.planet}}
+                              </button>
+                            </h2>
+                            <div id="transit{{aspect.transit.id}}" class="accordion-collapse collapse" data-bs-parent="#venus_accordion">
+                              <div class="accordion-body">
+                                {% if aspect.transit.meaning %}
+                      {{ aspect.transit.meaning | safe}}
+                      {% else %}
+                      <button type="button" class="btn btn-custom" data-bs-toggle="modal" data-bs-target="#venusModal">
+                          Add Transit Meaning
+                        </button>
+                      <div class="modal fade" id="venusModal" tabindex="-1" aria-labelledby="venusModalLabel" aria-hidden="true">
+
+                            <div class="modal-dialog text-center">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title text-center" id="venusModalLabel">Transiting Venus {{ aspect.transit.aspect.aspect_type }} Natal {{ aspect.transit.natal_planet.planet }}</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                  </div>
+                                  <div class="modal-body">
+                                      <form action="{{url_for('astro.addTransitMeaning', transit_id=aspect.transit.id)}}" method="POST">
+                                        {{form.hidden_tag()}}
+                                        {{ form.meaning.label }} {{ form.meaning }} <br>
+                                        {{ form.submit}}
+                                    </form>
+
+                                  </div>
+
+                                </div>
+                              </div>
+                            </div>
+                      {% endif %}
+                              </div>
+                            </div>
+                          </div>
+                          {% endfor %}
+                        </div>
+            </div>
+        </div>
+            </div>
+        </div>
+    </div>
+        {% endif %}
+        {% if mars_aspects != [] %}
+    <div class="col-md-6">
+        <div class="card text-center">
+            <div class="row">
+                        <div class="col-md-4">
+                          <img src="../../static/images/mars_icon.png" class="img-fluid rounded-start" alt="">
+                            </div>
+                      <div class="col-md-8">
+            <div class="card-body">
+                <div class="card-title"><h3>Mars</h3></div>
+                <div class="accordion" id="mars_accordion">
+                          {% for aspect in mars_aspects %}
+                          <div class="accordion-item">
+                            <h2 class="accordion-header">
+                              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#transit{{aspect.transit.id}}" aria-expanded="true" aria-controls="transit{{aspect.transit.id}}">
+                                {{aspect.transit.aspect.aspect_type}} {{aspect.transit.natal_planet.planet}}
+                              </button>
+                            </h2>
+                            <div id="transit{{aspect.transit.id}}" class="accordion-collapse collapse" data-bs-parent="#mars_accordion">
+                              <div class="accordion-body">
+                                {% if aspect.transit.meaning %}
+                      {{ aspect.transit.meaning | safe}}
+                      {% else %}
+                      <button type="button" class="btn btn-custom" data-bs-toggle="modal" data-bs-target="#marsModal">
+                          Add Transit Meaning
+                        </button>
+                      <div class="modal fade" id="marsModal" tabindex="-1" aria-labelledby="marsModalLabel" aria-hidden="true">
+
+                            <div class="modal-dialog text-center">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title text-center" id="marsModalLabel">Transiting Mars {{ aspect.transit.aspect.aspect_type }} Natal {{ aspect.transit.natal_planet.planet }}</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                  </div>
+                                  <div class="modal-body">
+                                      <form action="{{url_for('astro.addTransitMeaning', transit_id=aspect.transit.id)}}" method="POST">
+                                        {{form.hidden_tag()}}
+                                        {{ form.meaning.label }} {{ form.meaning }} <br>
+                                        {{ form.submit}}
+                                    </form>
+
+                                  </div>
+
+                                </div>
+                              </div>
+                            </div>
+                      {% endif %}
+                              </div>
+                            </div>
+                          </div>
+                          {% endfor %}
+                        </div>
+            </div>
+                      </div>
+            </div>
+        </div>
+    </div>
+        {% endif %}
+        {% if jup_aspects != [] %}
+    <div class="col-md-6">
+        <div class="card text-center">
+            <div class="row">
+                        <div class="col-md-4">
+                          <img src="../../static/images/jup_icon.png" class="img-fluid rounded-start" alt="">
+                            </div>
+                      <div class="col-md-8">
+            <div class="card-body">
+                <div class="card-title"><h3>Jupiter</h3></div>
+                 <div class="accordion" id="jup_accordion">
+                          {% for aspect in jup_aspects %}
+                          <div class="accordion-item">
+                            <h2 class="accordion-header">
+                              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#transit{{aspect.transit.id}}" aria-expanded="true" aria-controls="transit{{aspect.transit.id}}">
+                                {{aspect.transit.aspect.aspect_type}} {{aspect.transit.natal_planet.planet}}
+                              </button>
+                            </h2>
+                            <div id="transit{{aspect.transit.id}}" class="accordion-collapse collapse" data-bs-parent="#jup_accordion">
+                              <div class="accordion-body">
+                                {% if aspect.transit.meaning %}
+                      {{ aspect.transit.meaning | safe}}
+                      {% else %}
+                      <button type="button" class="btn btn-custom" data-bs-toggle="modal" data-bs-target="#jupModal">
+                          Add Transit Meaning
+                        </button>
+                      <div class="modal fade" id="jupModal" tabindex="-1" aria-labelledby="jupModalLabel" aria-hidden="true">
+
+                            <div class="modal-dialog text-center">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title text-center" id="jupModalLabel">Transiting Jupiter {{ aspect.transit.aspect.aspect_type }} Natal {{ aspect.transit.natal_planet.planet }}</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                  </div>
+                                  <div class="modal-body">
+                                      <form action="{{url_for('astro.addTransitMeaning', transit_id=aspect.transit.id)}}" method="POST">
+                                        {{form.hidden_tag()}}
+                                        {{ form.meaning.label }} {{ form.meaning }} <br>
+                                        {{ form.submit}}
+                                    </form>
+
+                                  </div>
+
+                                </div>
+                              </div>
+                            </div>
+                      {% endif %}
+                              </div>
+                            </div>
+                          </div>
+                          {% endfor %}
+                        </div>
+            </div>
+                      </div>
+            </div>
+        </div>
+    </div>
+        {% endif %}
+        {% if sat_aspects != [] %}
+    <div class="col-md-6">
+        <div class="card text-center">
+            <div class="row">
+                        <div class="col-md-4">
+                          <img src="../../static/images/saturn_icon.png" class="img-fluid rounded-start" alt="">
+                            </div>
+                      <div class="col-md-8">
+            <div class="card-body">
+                <div class="card-title"><h3>Saturn</h3></div>
+                <div class="accordion" id="sat_accordion">
+                          {% for aspect in sat_aspects %}
+                          <div class="accordion-item">
+                            <h2 class="accordion-header">
+                              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#transit{{aspect.transit.id}}" aria-expanded="true" aria-controls="transit{{aspect.transit.id}}">
+                                {{aspect.transit.aspect.aspect_type}} {{aspect.transit.natal_planet.planet}}
+                              </button>
+                            </h2>
+                            <div id="transit{{aspect.transit.id}}" class="accordion-collapse collapse" data-bs-parent="#sat_accordion">
+                              <div class="accordion-body">
+                                {% if aspect.transit.meaning %}
+                      {{ aspect.transit.meaning | safe}}
+                      {% else %}
+                      <button type="button" class="btn btn-custom" data-bs-toggle="modal" data-bs-target="#satModal">
+                          Add Transit Meaning
+                        </button>
+                      <div class="modal fade" id="satModal" tabindex="-1" aria-labelledby="satModalLabel" aria-hidden="true">
+
+                            <div class="modal-dialog text-center">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title text-center" id="satModalLabel">Transiting Saturn {{ aspect.transit.aspect.aspect_type }} Natal {{ aspect.transit.natal_planet.planet }}</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                  </div>
+                                  <div class="modal-body">
+                                      <form action="{{url_for('astro.addTransitMeaning', transit_id=aspect.transit.id)}}" method="POST">
+                                        {{form.hidden_tag()}}
+                                        {{ form.meaning.label }} {{ form.meaning }} <br>
+                                        {{ form.submit}}
+                                    </form>
+
+                                  </div>
+
+                                </div>
+                              </div>
+                            </div>
+                      {% endif %}
+                              </div>
+                            </div>
+                          </div>
+                          {% endfor %}
+                        </div>
+            </div>
+        </div>
+            </div>
+        </div>
+    </div>
+        {% endif %}
+       {% if uranus_aspects != [] %}
+    <div class="col-md-6">
+        <div class="card text-center">
+            <div class="row">
+                        <div class="col-md-4">
+                          <img src="../../static/images/uranus_icon.png" class="img-fluid rounded-start" alt="">
+                            </div>
+                      <div class="col-md-8">
+            <div class="card-body">
+                <div class="card-title"><h3>Uranus</h3></div>
+                <div class="accordion" id="uranus_accordion">
+                          {% for aspect in uranus_aspects %}
+                          <div class="accordion-item">
+                            <h2 class="accordion-header">
+                              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#transit{{aspect.transit.id}}" aria-expanded="true" aria-controls="transit{{aspect.transit.id}}">
+                                <h3>{{aspect.transit.aspect.aspect_type}} {{aspect.transit.natal_planet.planet}}</h3>
+                              </button>
+                            </h2>
+                            <div id="transit{{aspect.transit.id}}" class="accordion-collapse collapse" data-bs-parent="#uranus_accordion">
+                              <div class="accordion-body">
+                                {% if aspect.transit.meaning %}
+                      {{ aspect.transit.meaning | safe }}
+                      {% else %}
+                      <button type="button" class="btn btn-custom" data-bs-toggle="modal" data-bs-target="#uranusModal">
+                          Add Transit Meaning
+                        </button>
+                      <div class="modal fade" id="uranusModal" tabindex="-1" aria-labelledby="uranusModalLabel" aria-hidden="true">
+
+                            <div class="modal-dialog text-center">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title text-center" id="uranusModalLabel">Transiting Uranus {{ aspect.transit.aspect.aspect_type }} Natal {{ aspect.transit.natal_planet.planet }}</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                  </div>
+                                  <div class="modal-body">
+                                      <form action="{{url_for('astro.addTransitMeaning', transit_id=aspect.transit.id)}}" method="POST">
+                                        {{form.hidden_tag()}}
+                                        {{ form.meaning.label }} {{ form.meaning }} <br>
+                                        {{ form.submit}}
+                                    </form>
+
+                                  </div>
+
+                                </div>
+                              </div>
+                            </div>
+                      {% endif %}
+                              </div>
+                            </div>
+                          </div>
+                          {% endfor %}
+                        </div>
+            </div>
+                      </div>
+            </div>
+        </div>
+    </div>
+        {% endif %}
+        {% if nep_aspects != [] %}
+    <div class="col-md-6">
+        <div class="card text-center">
+            <div class="row">
+                        <div class="col-md-4">
+                          <img src="../../static/images/neptune_icon.png" class="img-fluid rounded-start" alt="">
+                            </div>
+                      <div class="col-md-8">
+            <div class="card-body">
+                <div class="card-title"><h3>Neptune</h3></div>
+                <div class="accordion" id="nep_accordion">
+                          {% for aspect in nep_aspects %}
+                          <div class="accordion-item">
+                            <h2 class="accordion-header">
+                              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#transit{{aspect.transit.id}}" aria-expanded="true" aria-controls="transit{{aspect.transit.id}}">
+                                {{aspect.transit.aspect.aspect_type}} {{aspect.transit.natal_planet.planet}}
+                              </button>
+                            </h2>
+                            <div id="transit{{aspect.transit.id}}" class="accordion-collapse collapse" data-bs-parent="#nep_accordion">
+                              <div class="accordion-body">
+                                {% if aspect.transit.meaning %}
+                      {{ aspect.transit.meaning | safe}}
+                      {% else %}
+                      <button type="button" class="btn btn-custom" data-bs-toggle="modal" data-bs-target="#nepModal">
+                          Add Transit Meaning
+                        </button>
+                      <div class="modal fade" id="nepModal" tabindex="-1" aria-labelledby="nepModalLabel" aria-hidden="true">
+
+                            <div class="modal-dialog text-center">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title text-center" id="nepModalLabel">Transiting Neptune {{ aspect.transit.aspect.aspect_type }} Natal {{ aspect.transit.natal_planet.planet }}</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                  </div>
+                                  <div class="modal-body">
+                                      <form action="{{url_for('astro.addTransitMeaning', transit_id=aspect.transit.id)}}" method="POST">
+                                        {{form.hidden_tag()}}
+                                        {{ form.meaning.label }} {{ form.meaning }} <br>
+                                        {{ form.submit}}
+                                    </form>
+
+                                  </div>
+
+                                </div>
+                              </div>
+                            </div>
+                      {% endif %}
+                              </div>
+                            </div>
+                          </div>
+                          {% endfor %}
+                        </div>
+            </div>
+                      </div>
+            </div>
+        </div>
+    </div>
+        {% endif %}
+        {% if pluto_aspects != [] %}
+    <div class="col-md-6">
+        <div class="card text-center">
+            <div class="row">
+                        <div class="col-md-4">
+                          <img src="../../static/images/pluto_icon.png" class="img-fluid rounded-start" alt="">
+                            </div>
+                      <div class="col-md-8">
+            <div class="card-body">
+                <div class="card-title"><h3>Pluto</h3></div>
+                 <div class="accordion" id="pluto_accordion">
+                          {% for aspect in pluto_aspects %}
+                          <div class="accordion-item">
+                            <h2 class="accordion-header">
+                              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#transit{{aspect.transit.id}}" aria-expanded="true" aria-controls="transit{{aspect.transit.id}}">
+                                {{aspect.transit.aspect.aspect_type}} {{aspect.transit.natal_planet.planet}}
+                              </button>
+                            </h2>
+                            <div id="transit{{aspect.transit.id}}" class="accordion-collapse collapse" data-bs-parent="#pluto_accordion">
+                              <div class="accordion-body">
+                                {% if aspect.transit.meaning %}
+                      {{ aspect.transit.meaning | safe }}
+                      {% else %}
+                      <button type="button" class="btn btn-custom" data-bs-toggle="modal" data-bs-target="#plutoModal">
+                          Add Transit Meaning
+                        </button>
+                      <div class="modal fade" id="plutoModal" tabindex="-1" aria-labelledby="plutoModalLabel" aria-hidden="true">
+
+                            <div class="modal-dialog text-center">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title text-center" id="plutoModalLabel">Transiting Pluto {{ aspect.transit.aspect.aspect_type }} Natal {{ aspect.transit.natal_planet.planet }}</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                  </div>
+                                  <div class="modal-body">
+                                      <form action="{{url_for('astro.addTransitMeaning', transit_id=aspect.transit.id)}}" method="POST">
+                                        {{form.hidden_tag()}}
+                                        {{ form.meaning.label }} {{ form.meaning }} <br>
+                                        {{ form.submit}}
+                                    </form>
+
+                                  </div>
+
+                                </div>
+                              </div>
+                            </div>
+                      {% endif %}
+                              </div>
+                            </div>
+                          </div>
+                          {% endfor %}
+                        </div>
+            </div>
+                      </div>
+            </div>
+        </div>
+    </div>
+        {% endif %}
+    </div>
+</div>
+
+{{ ckeditor.load(pkg_type="basic") }}
+ {{ ckeditor.config(name='meaning') }}
+{% endblock content %}
+
+
+
+

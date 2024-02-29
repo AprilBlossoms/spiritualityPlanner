@@ -1,0 +1,49 @@
+.card-header, ,card-footer, .card-body {
+    text-align: center;
+}
+
+.card-header, .card-footer {
+    background-color: MediumPurple;
+    color: Lavender;
+}
+
+.card {
+    background-color: Lavender;
+    border-radius: 25px;
+    }
+
+.btn-custom {
+    background-color: MediumPurple;
+    color: Lavender;
+}
+
+.card-footer a {
+    text-decoration: None;
+    color: lavender;
+}
+
+.card-footer a:hover {
+    color: black;
+}
+
+.card-body a {
+    text-decoration: none;
+    color: Lavender;
+}
+
+.card-body a:hover {
+    color: black;
+}
+
+body {
+    background-color: Lavender;
+}
+
+.dropdown-custom {
+    color: lavender;
+    background-color: MediumPurple;
+}
+
+.card-img-overlay {
+    color: rgb(242, 116, 167);
+}
