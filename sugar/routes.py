@@ -5,7 +5,7 @@ from flatlib import const
 from flatlib.chart import Chart
 from flatlib.datetime import Datetime
 
-import config
+import secret
 from spiritualityPlanner import db
 from spiritualityPlanner.models import Day, Phase, Sign, Moonphase, Daychart, Sugar, Dose, Meal
 from spiritualityPlanner.sugar.forms import AddSugar, AddDose, AddMeal, AddCarbs
@@ -33,7 +33,7 @@ def record():
             day_date = date.strftime('%Y/%m/%d')
             day_datetime = Datetime(day_date, now_time, "-06:00")
             response = requests.get(
-                f'https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/{config.ZIPCODE}/{date_str}?unitGroup=us&key={config.WEATHER_API_KEY}&include=days&elements=moonphase')
+                f'https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/{secret.ZIPCODE}/{date_str}?unitGroup=us&key={secret.WEATHER_API_KEY}&include=days&elements=moonphase')
             phase_num = (response.json()['days'][0]['moonphase'])
             if phase_num == 0:
                 phase = 'New'
@@ -53,7 +53,7 @@ def record():
                 phase = 'Waning Crescent'
 
             phase_db = Phase.query.filter_by(phase=phase).first()
-            day_chart = Chart(day_datetime, config.LOCATION, IDs=const.LIST_OBJECTS)
+            day_chart = Chart(day_datetime, secret.LOCATION, IDs=const.LIST_OBJECTS)
             moon = day_chart.get(const.MOON)
             sun = day_chart.get(const.SUN)
             sun_sign = Sign.query.filter_by(sign=sun.sign).first()
@@ -87,7 +87,7 @@ def record():
             day_date = date.strftime('%Y/%m/%d')
             day_datetime = Datetime(day_date, now_time, "-06:00")
             response = requests.get(
-                f'https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/{config.ZIPCODE}/{date_str}?unitGroup=us&key={config.WEATHER_API_KEY}&include=days&elements=moonphase')
+                f'https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/{secret.ZIPCODE}/{date_str}?unitGroup=us&key={secret.WEATHER_API_KEY}&include=days&elements=moonphase')
             phase_num = (response.json()['days'][0]['moonphase'])
             if phase_num == 0:
                 phase = 'New'
@@ -107,7 +107,7 @@ def record():
                 phase = 'Waning Crescent'
 
             phase_db = Phase.query.filter_by(phase=phase).first()
-            day_chart = Chart(day_datetime, config.LOCATION, IDs=const.LIST_OBJECTS)
+            day_chart = Chart(day_datetime, secret.LOCATION, IDs=const.LIST_OBJECTS)
             moon = day_chart.get(const.MOON)
             sun = day_chart.get(const.SUN)
             sun_sign = Sign.query.filter_by(sign=sun.sign).first()
@@ -141,7 +141,7 @@ def record():
             day_date = date.strftime('%Y/%m/%d')
             day_datetime = Datetime(day_date, now_time, "-06:00")
             response = requests.get(
-                f'https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/{config.ZIPCODE}/{date_str}?unitGroup=us&key={config.WEATHER_API_KEY}&include=days&elements=moonphase')
+                f'https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/{secret.ZIPCODE}/{date_str}?unitGroup=us&key={secret.WEATHER_API_KEY}&include=days&elements=moonphase')
             phase_num = (response.json()['days'][0]['moonphase'])
             if phase_num == 0:
                 phase = 'New'
@@ -161,7 +161,7 @@ def record():
                 phase = 'Waning Crescent'
 
             phase_db = Phase.query.filter_by(phase=phase).first()
-            day_chart = Chart(day_datetime, config.LOCATION, IDs=const.LIST_OBJECTS)
+            day_chart = Chart(day_datetime, secret.LOCATION, IDs=const.LIST_OBJECTS)
             moon = day_chart.get(const.MOON)
             sun = day_chart.get(const.SUN)
             sun_sign = Sign.query.filter_by(sign=sun.sign).first()

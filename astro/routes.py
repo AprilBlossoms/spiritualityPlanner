@@ -6,7 +6,7 @@ from flatlib import const, aspects
 from flatlib.chart import Chart
 from flatlib.datetime import Datetime
 
-import config
+import secret
 from spiritualityPlanner import db
 from spiritualityPlanner.astro.forms import AddTransitMeaning
 from spiritualityPlanner.models import Day, Phase, Sign, Moonphase, Daychart, Tplanet, Nplanet, Transit, Aspect, \
@@ -15,7 +15,7 @@ from spiritualityPlanner.models import Day, Phase, Sign, Moonphase, Daychart, Tp
 astro = Blueprint('astro', __name__, template_folder='templates', static_folder='static',
                   static_url_path='/astro/static')
 
-BIRTH_CHART = Chart(config.BIRTHDATE, config.BIRTHPLACE, IDs=const.LIST_OBJECTS)
+BIRTH_CHART = Chart(secret.BIRTHDATE, secret.BIRTHPLACE, IDs=const.LIST_OBJECTS)
 NATAL_SUN = BIRTH_CHART.get(const.SUN)
 NATAL_MOON = BIRTH_CHART.get(const.MOON)
 NATAL_MERCURY = BIRTH_CHART.get(const.MERCURY)
@@ -51,7 +51,7 @@ def transits_today():
         day_date = date.today().strftime('%Y/%m/%d')
         day_datetime = Datetime(day_date, now_time, "-06:00")
         response = requests.get(
-            f'https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/{config.ZIPCODE}/{date_str}?unitGroup=us&key={config.WEATHER_API_KEY}&include=days&elements=moonphase')
+            f'https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/{secret.ZIPCODE}/{date_str}?unitGroup=us&key={secret.WEATHER_API_KEY}&include=days&elements=moonphase')
         phase_num = (response.json()['days'][0]['moonphase'])
         if phase_num == 0:
             phase = 'New'
@@ -71,7 +71,7 @@ def transits_today():
             phase = 'Waning Crescent'
 
         phase_db = Phase.query.filter_by(phase=phase).first()
-        day_chart = Chart(day_datetime, config.LOCATION, IDs=const.LIST_OBJECTS)
+        day_chart = Chart(day_datetime, secret.LOCATION, IDs=const.LIST_OBJECTS)
         moon = day_chart.get(const.MOON)
         sun = day_chart.get(const.SUN)
         sun_sign = Sign.query.filter_by(sign=sun.sign).first()
@@ -224,7 +224,7 @@ def transits_upcoming():
             day_date = item.strftime('%Y/%m/%d')
             day_datetime = Datetime(day_date, now_time, "-06:00")
             response = requests.get(
-                f'https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/{config.ZIPCODE}/{date_str}?unitGroup=us&key={config.WEATHER_API_KEY}&include=days&elements=moonphase')
+                f'https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/{secret.ZIPCODE}/{date_str}?unitGroup=us&key={secret.WEATHER_API_KEY}&include=days&elements=moonphase')
             phase_num = (response.json()['days'][0]['moonphase'])
             if phase_num == 0:
                 phase = 'New'
@@ -244,7 +244,7 @@ def transits_upcoming():
                 phase = 'Waning Crescent'
 
             phase_db = Phase.query.filter_by(phase=phase).first()
-            day_chart = Chart(day_datetime, config.LOCATION, IDs=const.LIST_OBJECTS)
+            day_chart = Chart(day_datetime, secret.LOCATION, IDs=const.LIST_OBJECTS)
             moon = day_chart.get(const.MOON)
             sun = day_chart.get(const.SUN)
             sun_sign = Sign.query.filter_by(sign=sun.sign).first()
